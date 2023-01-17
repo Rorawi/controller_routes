@@ -1,19 +1,16 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
-const { listBankController, createBankController, updateBankController, deleteBankController, createAccountController } = require('./controllers')
+const accountRoutes = require('./routes/account')
+const bankRoutes = require('./routes/bank')
+// const { listBankController, createBankController, updateBankController, deleteBankController, createAccountController, listAccountController } = require('./controllers')
 const server = express();
 //middlewares
 server.use(bodyParser.json())
 
 //routes
-server.get('/banks/:id?',listBankController)
-server.post('/bank', createBankController)
-server.put('/bank',updateBankController)
-server.delete('/bank',deleteBankController)
-
-
-server.post('/account', createAccountController)
+server.use(accountRoutes)
+server.use(bankRoutes)
 mongoose.set('strictQuery', true);
 mongoose.connect("mongodb+srv://Person1:person1@cluster0.2hdoecz.mongodb.net/?retryWrites=true&w=majority",
     // { useNewUrlParser: true, useUnifiedTopology: true }
