@@ -1,6 +1,6 @@
 const BankModel = require('../models/bank');
-const accountModel = require('../models/account')
-
+const accountModel = require('../models/account');
+const { validationResult } = require('express-validator');
 const listBankController = (req, res) => {
     // const banks = BankModel.all();
     const { id } = req.params
@@ -20,8 +20,15 @@ const listBankController = (req, res) => {
 }
 
 const createBankController = (req, res) => {
-    const { name, location, branch, phone, address, accountNumber } = req.body
 
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        console.log(errors);
+        return res.json({message: errors.array()[0].msg})
+    }
+    const { name, location, branch, phone, address, accountNumber } = req.body
+     
+  
     const bank = new BankModel({ name, location, branch, phone, address, accountNumber });
     bank.save().then(result => {
         res.json({ message: "create successful", data: bank })

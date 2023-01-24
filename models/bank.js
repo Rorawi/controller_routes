@@ -25,6 +25,30 @@ const BankModel = mongoose.model("Bank", BankSchema)
 
 
 module.exports = BankModel
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // class BankModel {
 //     constructor({name,location,branch,phone,address,accountNumber}) {
 //         this.name = name,

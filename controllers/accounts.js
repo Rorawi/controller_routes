@@ -1,7 +1,17 @@
 const accountModel = require("../models/account")
+const {validationResult} = require("express-validator")
 
 
 const createAccountController = (req, res) => {
+
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        console.log(errors);
+        return res.json({message: errors.array()[0].msg})
+    }
+
+
     const { name, number, accountType, bankId } = req.body;
     const account = new accountModel({ name, number, accountType, bankId });
     account.save().then(result => {
